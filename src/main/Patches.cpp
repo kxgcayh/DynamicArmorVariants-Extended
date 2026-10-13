@@ -57,37 +57,12 @@ auto VerifySkillLevelingHookBytes(const std::uintptr_t a_address) -> bool {
   return false;
 }
 } // namespace
-
 void Patches::WriteInitWornPatch(InitWornArmorFunc *a_func) {
-  if (REL::Module::IsAE() &&
-      REL::Module::get().version() >= REL::Version(1, 7, 99, 0)) {
-    // In 1.7.99+, the worn armor loop was extracted into standalone helper ID 17792.
-    // Detour ID 17792 entry directly to our InitWornArmor replacement.
-    auto hook = util::MakeHook(RE::Offset::TESNPC::InitWornArmor);
-
-    struct Patch17 : public Xbyak::CodeGenerator {
-      Patch17(std::uintptr_t a_funcAddr) {
-        mov(rax, a_funcAddr);
-        jmp(rax);
-      }
-    };
-
-    Patch17 patch{reinterpret_cast<std::uintptr_t>(a_func)};
-    patch.ready();
-
-    if (patch.getSize() > 0x12) {
-      util::report_and_fail("Patch was too large, failed to install"sv);
-    }
-
-    REL::safe_fill(hook.address(), REL::INT3, 0x12);
-    REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
-    return;
-  }
-
   auto hook = util::MakeHook(RE::Offset::TESNPC::InitWornForm, 0x2F0);
 
   struct Patch : public Xbyak::CodeGenerator {
     Patch(std::uintptr_t a_funcAddr) {
+      mov(r8, r12);
       mov(rdx, r13);
       mov(rcx, rbp);
       mov(rax, a_funcAddr);

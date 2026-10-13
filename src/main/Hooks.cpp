@@ -168,10 +168,19 @@ void Hooks::Install() {
 
 void Hooks::InitWornArmor(RE::TESObjectARMO *a_armor, RE::Actor *a_actor,
                           RE::BSTSmartPointer<RE::BipedAnim> *a_biped) {
+  if (!a_actor || !a_armor) {
+    return;
+  }
+
+  const auto *actorBase = a_actor->GetActorBase();
+  if (!actorBase) {
+    return;
+  }
+
   const auto useMaskOverrides =
       DynamicArmorManager::GetSingleton()->ShouldUseCustomInitWornArmor(
           a_actor, a_armor);
-  auto sex = a_actor->GetActorBase()->GetSex();
+  auto sex = actorBase->GetSex();
   // Different source branches can converge on the same resolved visual ARMA.
   // Only skip exact owner/mask duplicates; distinct masks may initialize
   // different body parts from the same resolved addon.
