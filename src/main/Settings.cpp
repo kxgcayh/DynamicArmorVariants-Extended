@@ -39,7 +39,8 @@ auto ParseLogLevel(const std::string_view a_value)
 
 auto DescribeLogLevel(const spdlog::level::level_enum a_level)
     -> std::string_view {
-  return spdlog::level::to_string_view(a_level);
+  const auto sv = spdlog::level::to_string_view(a_level);
+  return std::string_view{sv.data(), sv.size()};
 }
 
 auto GetSettingsPath() -> fs::path {

@@ -67,5 +67,8 @@ inline auto MakeHook(REL::VariantOffset a_address,
 #define MAKE_RELOCATION(a_idSE, a_idAE) REL::RelocationID((a_idSE), (a_idAE))
 
 #define DLLEXPORT __declspec(dllexport)
+#ifndef SKSEAPI
+#define SKSEAPI __cdecl
+#endif
 
 #include "Plugin.h"

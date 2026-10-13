@@ -50,6 +50,15 @@ void ApplyConfiguredLogLevel() {
 }
 
 } // namespace
+ 
+SKSEPluginInfo(
+    .Version = { DAVE_VERSION_MAJOR, DAVE_VERSION_MINOR, DAVE_VERSION_PATCH, 0 },
+    .Name = "DynamicArmorVariants",
+    .Author = "Parapets, PenguinToast",
+    .SupportEmail = "",
+    .StructCompatibility = SKSE::StructCompatibility::Independent,
+    .RuntimeCompatibility = SKSE::VersionIndependence::AddressLibrary
+)
 
 extern "C" DLLEXPORT bool SKSEAPI
 SKSEPlugin_Load(const SKSE::LoadInterface *a_skse) {

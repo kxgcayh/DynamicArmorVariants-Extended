@@ -6,3 +6,4 @@ tools/
 *.7z
 .xmake/
 compile_commands.json
+build_cross/

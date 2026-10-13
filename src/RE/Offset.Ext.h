@@ -30,6 +30,8 @@ inline constexpr auto Visit = MAKE_RELOCATION(15991, 16233);
 namespace TESNPC {
 // SkyrimSE 1.6.353: 0x37B430
 inline constexpr auto InitWornForm = MAKE_RELOCATION(24232, 24736);
+// SkyrimSE 1.7.99+: loop extracted from InitWornForm into standalone function
+inline constexpr auto InitWornArmor = REL::RelocationID(0, 17792);
 } // namespace TESNPC
 
 namespace TESObjectARMA {
